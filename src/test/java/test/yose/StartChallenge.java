@@ -2,6 +2,7 @@ package test.yose;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import yose.YoseServer;
 
@@ -53,5 +54,29 @@ public class StartChallenge {
         String body = out.toString();
 
         assertThat(body, containsString("Hello Yose"));
+    }
+
+    @Test
+    public void pingRespondWithAliveJSONResponse() throws Exception {
+        URL url = new URL("http://localhost:3000/ping");
+        URLConnection connection = url.openConnection();
+        connection.setReadTimeout(1000);
+        connection.connect();
+
+        assertThat(connection.getContentType(), equalTo("application/json"));
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        InputStream in = connection.getInputStream();
+        byte[] buff = new byte[1024];
+        while (true) {
+            int reads = in.read(buff);
+            if (reads == -1) {
+                break;
+            }
+            out.write(buff, 0, reads);
+        }
+        String body = out.toString();
+
+        assertThat(body, equalTo("{\"alive\":true}"));
     }
 }

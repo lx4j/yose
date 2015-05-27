@@ -25,6 +25,16 @@ public class YoseServer {
                 exchange.close();
             }
         });
+
+        server.createContext("/ping", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+                exchange.getResponseHeaders().add("Content-Type", "application/json");
+                exchange.sendResponseHeaders(200, 0);
+                exchange.getResponseBody().write("{\"alive\":true}".getBytes());
+                exchange.close();
+            }
+        });
     }
 
     private InetSocketAddress listenOn(int serverPort) {
