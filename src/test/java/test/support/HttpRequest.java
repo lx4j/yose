@@ -12,6 +12,8 @@ import java.net.URLConnection;
  */
 public class HttpRequest {
 
+    private static final int TIMEOUT_MILLIS = 5000;
+
     public static HttpResponse get(String uri) throws IOException {
         return new HttpResponse(connect(uri));
     }
@@ -19,7 +21,7 @@ public class HttpRequest {
     private static HttpURLConnection connect(String uri) throws IOException {
         URL url = new URL(uri);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setReadTimeout(1000);
+        connection.setReadTimeout(TIMEOUT_MILLIS);
         connection.connect();
         return connection;
     }

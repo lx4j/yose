@@ -1,29 +1,14 @@
 package yose;
 
-import java.util.HashMap;
-import java.util.Map;
+import static yose.View.html;
+import static yose.View.json;
 
 /**
- * Created by L.x on 15-5-27.
+ * Created by L.x on 15-5-28.
  */
-public class YoseViewResolver implements ViewResolver {
-    private Map<String, View> views = new HashMap<String, View>();
-
-    public ViewRegistry respond(final String path) {
-        return new ViewRegistry() {
-            public void with(View view) {
-                views.put(path, view);
-            }
-        };
+public class YoseViewResolver extends ViewMappingResolver {
+    public YoseViewResolver() {
+        respond("/").with(html("Hello Yose<a id='repository-link' href='https://github.com/lx4j/yose'>github</a>"));
+        respond("/ping").with(json("{\"alive\":true}"));
     }
-
-    @Override
-    public View resolve(String path) {
-        View view = views.get(path);
-        if (view == null) {
-            return View.fileNotFound();
-        }
-        return view;
-    }
-
 }

@@ -12,6 +12,8 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.11'
+    testCompile 'org.testinfected.hamcrest-matchers:dom-matchers:1.6'
+    testCompile 'net.sourceforge.nekohtml:nekohtml:1.9.22'
 }
 
 idea {

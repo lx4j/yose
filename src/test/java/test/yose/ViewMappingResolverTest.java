@@ -2,7 +2,7 @@ package test.yose;
 
 import org.junit.Test;
 import yose.View;
-import yose.YoseViewResolver;
+import yose.ViewMappingResolver;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -12,10 +12,10 @@ import static yose.View.html;
 /**
  * Created by L.x on 15-5-27.
  */
-public class YoseViewResolverTest {
+public class ViewMappingResolverTest {
     @Test
     public void viewResolved() throws Exception {
-        YoseViewResolver resolver = new YoseViewResolver();
+        ViewMappingResolver resolver = new ViewMappingResolver();
         View expected = html("yose");
         resolver.respond("/").with(expected);
 
@@ -25,7 +25,7 @@ public class YoseViewResolverTest {
 
     @Test
     public void return404_ifViewUnresolved() throws Exception {
-        YoseViewResolver resolver = new YoseViewResolver();
+        ViewMappingResolver resolver = new ViewMappingResolver();
 
         View resolved = resolver.resolve("/ping");
         assertThat(resolved.status, equalTo(404));

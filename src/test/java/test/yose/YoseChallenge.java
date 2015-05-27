@@ -5,9 +5,6 @@ import org.junit.Before;
 import yose.YoseServer;
 import yose.YoseViewResolver;
 
-import static yose.View.html;
-import static yose.View.json;
-
 /**
  * Created by L.x on 15-5-28.
  */
@@ -17,10 +14,7 @@ abstract public class YoseChallenge {
     @Before
     public void setUp() throws Exception {
         server = new YoseServer(3000);
-        server.setViewResolver(new YoseViewResolver() {{
-            respond("/").with(html("Hello Yose"));
-            respond("/ping").with(json("{\"alive\":true}"));
-        }});
+        server.setViewResolver(new YoseViewResolver());
         server.start();
     }
 
@@ -28,4 +22,5 @@ abstract public class YoseChallenge {
     public void tearDown() throws Exception {
         server.stop();
     }
+
 }
