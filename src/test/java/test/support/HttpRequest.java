@@ -3,6 +3,7 @@ package test.support;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -15,9 +16,9 @@ public class HttpRequest {
         return new HttpResponse(connect(uri));
     }
 
-    private static URLConnection connect(String uri) throws IOException {
+    private static HttpURLConnection connect(String uri) throws IOException {
         URL url = new URL(uri);
-        URLConnection connection = url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setReadTimeout(1000);
         connection.connect();
         return connection;

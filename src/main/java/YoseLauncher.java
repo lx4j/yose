@@ -1,6 +1,10 @@
+import yose.YoseViewResolver;
+import yose.View;
 import yose.YoseServer;
 
 import java.io.IOException;
+
+import static yose.View.html;
 
 /**
  * Created by L.x on 15-5-27.
@@ -8,6 +12,10 @@ import java.io.IOException;
 public class YoseLauncher {
     public static void main(String[] args) throws IOException {
         YoseServer server = new YoseServer(3000);
+        server.setViewResolver(new YoseViewResolver() {{
+            respond("/").with(html("Hello Yose"));
+            respond("/ping").with(View.json("{\"alive\":true}"));
+        }});
         stopServerWhenShutdown(server);
         server.start();
     }

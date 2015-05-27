@@ -6,8 +6,6 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by L.x on 15-5-27.
@@ -15,27 +13,22 @@ import java.util.Map;
 public class YoseServer {
 
     private HttpServer server;
-    private Map<String, View> views = new HashMap<String, View>() {{
-        put("/", new View("text/html", "Hello Yose"));
-        put("/ping", new View("application/json", "{\"alive\":true}"));
-    }};
+    private ViewResolver viewResolver;
 
     public YoseServer(int port) throws IOException {
         server = HttpServer.create(listenOn(port), 0);
-        for (String path : views.keySet()) {
-            final View view = views.get(path);
-            server.createContext(path, new HttpHandler() {
-                @Override
-                public void handle(HttpExchange exchange) throws IOException {
-                    respond(view, exchange);
-                }
-            });
-        }
+        server.createContext("/", new HttpHandler() {
+            @Override
+            public void handle(HttpExchange exchange) throws IOException {
+                View view = viewResolver.resolve(exchange.getRequestURI().getPath());
+                respond(view, exchange);
+            }
+        });
     }
 
     private void respond(View view, HttpExchange exchange) throws IOException {
         exchange.getResponseHeaders().add("Content-Type", view.contentType);
-        exchange.sendResponseHeaders(200, 0);
+        exchange.sendResponseHeaders(view.status, 0);
         exchange.getResponseBody().write(view.body.getBytes());
         exchange.close();
     }
@@ -50,5 +43,9 @@ public class YoseServer {
 
     public void stop() {
         server.stop(0);
+    }
+
+    public void setViewResolver(ViewResolver viewResolver) {
+        this.viewResolver = viewResolver;
     }
 }

@@ -3,15 +3,15 @@ package test.support;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
+import java.net.HttpURLConnection;
 
 /**
  * Created by L.x on 15-5-27.
  */
 public class HttpResponse {
-    public URLConnection connection;
+    public HttpURLConnection connection;
 
-    public HttpResponse(URLConnection connection) {
+    public HttpResponse(HttpURLConnection connection) {
         this.connection = connection;
     }
 
@@ -19,9 +19,13 @@ public class HttpResponse {
         return connection.getContentType();
     }
 
+    public int statusCode() throws IOException {
+        return connection.getResponseCode();
+    }
+
     public String body() throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        InputStream in = connection.getInputStream();
+        InputStream in = content();
         byte[] buff = new byte[1024];
         while (true) {
             int reads = in.read(buff);
@@ -31,5 +35,9 @@ public class HttpResponse {
             out.write(buff, 0, reads);
         }
         return out.toString();
+    }
+
+    private InputStream content() throws IOException {
+        return statusCode() == 404 ? connection.getErrorStream() : connection.getInputStream();
     }
 }
