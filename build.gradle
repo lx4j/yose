@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+}
+
+idea {
+    module {
+        excludeDirs += [file('.idea'), file('.gradle'), file('gradle')]
+    }
+}
