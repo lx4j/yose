@@ -17,23 +17,7 @@ import static yose.View.json;
 /**
  * Created by L.x on 15-5-27.
  */
-public class StartChallenge {
-    private YoseServer server;
-
-    @Before
-    public void setUp() throws Exception {
-        server = new YoseServer(3000);
-        server.setViewResolver(new YoseViewResolver() {{
-            respond("/").with(html("Hello Yose"));
-            respond("/ping").with(json("{\"alive\":true}"));
-        }});
-        server.start();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        server.stop();
-    }
+public class StartChallenge extends YoseChallenge {
 
     @Test
     public void serveAHtmlPageContainingTextHelloYoseInTheRootOfYoseServer() throws Exception {
@@ -49,15 +33,6 @@ public class StartChallenge {
 
         assertThat(response.contentType(), equalTo("application/json"));
         assertThat(response.body(), equalTo("{\"alive\":true}"));
-    }
-
-    @Test
-    public void return404WhenFileNotFound() throws Exception {
-        HttpResponse response = HttpRequest.get("http://localhost:3000/unknown");
-
-        assertThat(response.contentType(), equalTo("text/html"));
-        assertThat(response.statusCode(),equalTo(404));
-        assertThat(response.body(), equalTo("File Not Found"));
     }
 
 }
