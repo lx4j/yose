@@ -2,13 +2,11 @@ package test.yose;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import test.support.HttpRequest;
+import test.support.HttpResponse;
 import yose.YoseServer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
 import java.net.URLConnection;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -34,49 +32,18 @@ public class StartChallenge {
 
     @Test
     public void serveAHtmlPageContainingTextHelloYoseInTheRootOfYoseServer() throws Exception {
-        URL url = new URL("http://localhost:3000");
-        URLConnection connection = url.openConnection();
-        connection.setReadTimeout(1000);
-        connection.connect();
+        HttpResponse response = HttpRequest.get("http://localhost:3000");
 
-        assertThat(connection.getContentType(), equalTo("text/html"));
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        InputStream in = connection.getInputStream();
-        byte[] buff = new byte[1024];
-        while (true) {
-            int reads = in.read(buff);
-            if (reads == -1) {
-                break;
-            }
-            out.write(buff, 0, reads);
-        }
-        String body = out.toString();
-
-        assertThat(body, containsString("Hello Yose"));
+        assertThat(response.contentType(), equalTo("text/html"));
+        assertThat(response.body(), containsString("Hello Yose"));
     }
 
     @Test
     public void pingRespondWithAliveJSONResponse() throws Exception {
-        URL url = new URL("http://localhost:3000/ping");
-        URLConnection connection = url.openConnection();
-        connection.setReadTimeout(1000);
-        connection.connect();
+        HttpResponse response = HttpRequest.get("http://localhost:3000/ping");
 
-        assertThat(connection.getContentType(), equalTo("application/json"));
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        InputStream in = connection.getInputStream();
-        byte[] buff = new byte[1024];
-        while (true) {
-            int reads = in.read(buff);
-            if (reads == -1) {
-                break;
-            }
-            out.write(buff, 0, reads);
-        }
-        String body = out.toString();
-
-        assertThat(body, equalTo("{\"alive\":true}"));
+        assertThat(response.contentType(), equalTo("application/json"));
+        assertThat(response.body(), equalTo("{\"alive\":true}"));
     }
+
 }
