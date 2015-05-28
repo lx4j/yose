@@ -6,6 +6,9 @@
     "url": "git+https://github.com/lx4j/yose.git"
   },
   "devDependencies": {
-    "gulp": "^3.8.11"
+    "expect.js": "^0.3.1",
+    "gulp": "^3.8.11",
+    "gulp-mocha-phantomjs": "^0.6.1",
+    "mocha": "^2.2.5"
   }
 }
