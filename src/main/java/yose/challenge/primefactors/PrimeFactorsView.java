@@ -16,19 +16,12 @@ import static yose.core.StaticView.json;
 public class PrimeFactorsView implements View {
     @Override
     public void render(final HttpRequest request, HttpResponse response) throws IOException {
-        String[] parameters = request.getParameterValues("number");
-        if (parameters.length == 1) {
-            final String parameter = parameters[0];
+        List<Result> compositions = new ArrayList<Result>();
+        for (String parameter : request.getParameterValues("number")) {
             Result result = PrimeFactors.decompose(parameter);
-            json(result).render(request, response);
-        } else {
-            List<Result> compositions = new ArrayList<Result>();
-            for (String parameter : parameters) {
-                Result result = PrimeFactors.decompose(parameter);
-                compositions.add(result);
-            }
-            json(compositions).render(request, response);
+            compositions.add(result);
         }
+        json(compositions.size() == 1 ? compositions.get(0) : compositions).render(request, response);
     }
 
 }
