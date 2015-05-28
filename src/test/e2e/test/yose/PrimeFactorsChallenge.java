@@ -26,5 +26,15 @@ public class PrimeFactorsChallenge extends YoseChallenge {
         assertThat(JSON.toList(result.getJSONArray("decomposition")), equalTo(Arrays.<Object>asList(2, 2, 2, 2)));
     }
 
+    @Test
+    public void reportErrorWithInvalidNumber() throws Exception {
+        HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=hello");
+
+        assertThat(response.contentType(), equalTo("application/json"));
+        JSONObject result = response.asJsonObject();
+        assertThat(result.getString("number"), equalTo("hello"));
+        assertThat(result.getString("error"), equalTo("not a number"));
+    }
+
 
 }

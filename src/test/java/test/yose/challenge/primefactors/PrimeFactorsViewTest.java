@@ -3,7 +3,6 @@ package test.yose.challenge.primefactors;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.junit.Ignore;
 import org.junit.Test;
 import test.support.JSON;
 import yose.challenge.primefactors.PrimeFactorsView;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class PrimeFactorsViewTest {
 
@@ -33,6 +32,17 @@ public class PrimeFactorsViewTest {
         JSONObject result = response.asJsonObject();
         assertThat((Integer) result.get("number"), equalTo(16));
         assertThat(JSON.toList(result.getJSONArray("decomposition")), equalTo(Arrays.<Object>asList(2, 2, 2, 2)));
+    }
+
+    @Test
+    public void reportErrorWithInvalidNumber() throws Exception {
+        request.with("number", "hello");
+
+        view.render(request, response);
+
+        JSONObject result = response.asJsonObject();
+        assertThat(result.getString("number"), equalTo("hello"));
+        assertThat(result.getString("error"), equalTo("not a number"));
     }
 
     private static class MockHttpRequest implements HttpRequest {
