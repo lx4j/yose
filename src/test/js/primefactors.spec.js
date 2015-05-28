@@ -10,8 +10,13 @@ describe('primefactors', function () {
         it("decomposition", function () {
             expect(primeFactors.render({number: 6, decomposition: [2, 3]})).to.equal('6 = 2 x 3');
         });
+
         it("too big number", function () {
             expect(primeFactors.render({number: 100000000, error: 'too big number (\u003e1e6)'})).to.equal('too big number (>1e6)');
+        });
+
+        it("NaN", function () {
+            expect(primeFactors.render({number: '3hello', error: 'not a number'})).to.equal('3hello is not a number');
         });
     });
 

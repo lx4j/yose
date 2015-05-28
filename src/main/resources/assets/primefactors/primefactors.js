@@ -27,7 +27,7 @@ function PrimeFactors(container) {
 }
 PrimeFactors.prototype.render = function (result) {
     if (result.error) {
-        return result.error;
+        return isNaN(result.number) ? [result.number, result.error].join(' is ') : result.error;
     }
     return result.number + ' = ' + result.decomposition.join(' x ');
 };
