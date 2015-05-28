@@ -26,5 +26,8 @@ function PrimeFactors(container) {
     });
 }
 PrimeFactors.prototype.render = function (result) {
+    if (result.error) {
+        return result.error;
+    }
     return result.number + ' = ' + result.decomposition.join(' x ');
 };
