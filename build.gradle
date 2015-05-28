@@ -16,7 +16,9 @@ dependencies {
     testCompile 'net.sourceforge.nekohtml:nekohtml:1.9.22'
     testCompile 'org.json:json:20080701'
 }
-
+sourceSets.test.java{
+    srcDirs+=[file('src/test/e2e')]
+}
 idea {
     module {
         excludeDirs += [file('.idea'), file('.gradle'), file('gradle')]
