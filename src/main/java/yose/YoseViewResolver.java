@@ -19,6 +19,7 @@ public class YoseViewResolver extends ViewMappingResolver {
         respond("/ping").with(json(Collections.singletonMap("alive", true)));
         respond("/primeFactors").with(new PrimeFactorsView());
         respond("/primeFactors/ui").with(html(from("/assets/primefactors/index.html")));
+        respond("/primeFactors/primefactors.js").with(html(from("/assets/primefactors/primefactors.js")));
     }
 
 

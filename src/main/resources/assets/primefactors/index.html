@@ -7,11 +7,17 @@
 <body>
 <h2 id='title'>Prime Factors</h2>
 
-<fieldset>
-    <legend id='invitation'>Enter a number to decompose:</legend>
-    <input id='number'/>
-    <button id='go'>Decompose</button>
-</fieldset>
-<div id="result"></div>
+<div id="console">
+    <fieldset>
+        <legend id='invitation'>Enter a number to decompose:</legend>
+        <input id='number'/>
+        <button id='go'>Decompose</button>
+    </fieldset>
+    <div id="result"></div>
+</div>
+<script src="primefactors.js"></script>
+<script>
+    new PrimeFactors('console');
+</script>
 </body>
 </html>

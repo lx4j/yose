@@ -10,13 +10,10 @@
 <script src="../../../node_modules/expect.js/index.js"></script>
 <script src="../../../node_modules/mocha/mocha.js"></script>
 <script>mocha.setup('bdd')</script>
-<script>
-    describe('mocha', function () {
-        it('ok', function () {
-            expect(true).to.equal(true);
-        });
-    });
-</script>
+<script src="../../main/resources/assets/primefactors/primefactors.js"></script>
+<script src="primefactors.spec.js"></script>
+<div id="mocha"></div>
+<div id="console"></div>
 <script>
     if (window.mochaPhantomJS) {
         mochaPhantomJS.run();
