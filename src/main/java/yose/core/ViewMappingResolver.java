@@ -1,4 +1,4 @@
-package yose;
+package yose.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +18,10 @@ public class ViewMappingResolver implements ViewResolver {
     }
 
     @Override
-    public View resolve(String path) {
+    public View resolveView(String path) {
         View view = views.get(path);
         if (view == null) {
-            return View.fileNotFound();
+            return StaticView.fileNotFound();
         }
         return view;
     }

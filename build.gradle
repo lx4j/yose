@@ -11,10 +11,12 @@ repositories {
 }
 
 dependencies {
+    compile 'org.json:json:20080701'
     testCompile 'junit:junit:4.11'
     testCompile 'org.testinfected.hamcrest-matchers:dom-matchers:1.6'
     testCompile 'net.sourceforge.nekohtml:nekohtml:1.9.22'
-    testCompile 'org.json:json:20080701'
+    testCompile 'org.jmock:jmock-junit4:2.6.0'
+    testCompile 'org.jmock:jmock-legacy:2.6.0-RC2'
 }
 sourceSets.test.java{
     srcDirs+=[file('src/test/e2e')]

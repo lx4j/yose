@@ -1,4 +1,5 @@
-import yose.YoseServer;
+import yose.sun.SunHttpServer;
+import yose.core.YoseServer;
 import yose.YoseViewResolver;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.io.IOException;
  */
 public class YoseLauncher {
     public static void main(String[] args) throws IOException {
-        YoseServer server = new YoseServer(3000);
+        YoseServer server = new SunHttpServer(3000);
         server.setViewResolver(new YoseViewResolver());
         stopServerWhenShutdown(server);
         server.start();

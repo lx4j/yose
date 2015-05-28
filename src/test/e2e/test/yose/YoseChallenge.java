@@ -2,7 +2,8 @@ package test.yose;
 
 import org.junit.After;
 import org.junit.Before;
-import yose.YoseServer;
+import yose.sun.SunHttpServer;
+import yose.core.YoseServer;
 import yose.YoseViewResolver;
 
 /**
@@ -13,7 +14,7 @@ abstract public class YoseChallenge {
 
     @Before
     public void setUp() throws Exception {
-        server = new YoseServer(3000);
+        server = new SunHttpServer(3000);
         server.setViewResolver(new YoseViewResolver());
         server.start();
     }
