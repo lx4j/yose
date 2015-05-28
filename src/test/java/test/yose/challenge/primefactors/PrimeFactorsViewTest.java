@@ -1,11 +1,8 @@
 package test.yose.challenge.primefactors;
 
-import org.hamcrest.CoreMatchers;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.junit.Test;
-import test.support.JSON;
+import yose.utils.JSON;
+import yose.challenge.primefactors.Decomposition;
 import yose.challenge.primefactors.PrimeFactorsView;
 import yose.core.HttpRequest;
 import yose.core.HttpResponse;
@@ -30,9 +27,9 @@ public class PrimeFactorsViewTest {
 
         view.render(request, response);
 
-        JSONObject result = response.asJsonObject();
-        assertThat(result.getInt("number"), equalTo(16));
-        assertThat(JSON.toList(result.getJSONArray("decomposition")), equalTo(Arrays.<Object>asList(2, 2, 2, 2)));
+        Decomposition result = response.asJson(Decomposition.class);
+        assertThat(result.number, equalTo("16"));
+        assertThat(result.decomposition, equalTo(Arrays.asList(2, 2, 2, 2)));
     }
 
     private static class MockHttpRequest implements HttpRequest {
@@ -49,7 +46,7 @@ public class PrimeFactorsViewTest {
     }
 
 
-    private class MockHttpResponse implements HttpResponse {
+    private static class MockHttpResponse implements HttpResponse {
         private String contentType;
         private int status;
         private StringBuilder content = new StringBuilder();
@@ -69,8 +66,9 @@ public class PrimeFactorsViewTest {
             this.content.append(content);
         }
 
-        public JSONObject asJsonObject() throws JSONException {
-            return new JSONObject(new JSONTokener(content.toString()));
+        public <T> T asJson(Class<T> type) throws IOException {
+            return JSON.parse(content.toString(), type);
         }
+
     }
 }

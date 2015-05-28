@@ -1,7 +1,6 @@
 package yose.core;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import yose.utils.JSON;
 
 import java.io.IOException;
 
@@ -40,10 +39,9 @@ public class StaticView implements View {
         response.write(body);
     }
 
-    private static Gson gson = new GsonBuilder().create();
 
     public static View json(Object object) {
-        return json(gson.toJson(object));
+        return json(JSON.stringify(object));
     }
 
 }

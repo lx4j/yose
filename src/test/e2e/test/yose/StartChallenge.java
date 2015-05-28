@@ -8,6 +8,8 @@ import org.w3c.dom.Element;
 import test.support.HttpRequest;
 import test.support.HttpResponse;
 
+import java.util.Map;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -33,7 +35,7 @@ public class StartChallenge extends YoseChallenge {
         HttpResponse response = HttpRequest.get("http://localhost:3000/ping");
 
         assertThat(response.contentType(), equalTo("application/json"));
-        assertThat(response.asJsonObject().getBoolean("alive"), equalTo(true));
+        assertThat((Boolean) response.asJsonObject(Map.class).get("alive"), equalTo(true));
     }
 
     @Test

@@ -1,12 +1,14 @@
 package test.yose;
 
-import org.json.JSONObject;
 import org.junit.Test;
 import test.support.HttpRequest;
 import test.support.HttpResponse;
-import test.support.JSON;
+import yose.challenge.primefactors.*;
+import yose.challenge.primefactors.Error;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -21,9 +23,9 @@ public class PrimeFactorsChallenge extends YoseChallenge {
         HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=16");
 
         assertThat(response.contentType(), equalTo("application/json"));
-        JSONObject result = response.asJsonObject();
-        assertThat(result.getInt("number"), equalTo(16));
-        assertThat(JSON.toList(result.getJSONArray("decomposition")), equalTo(Arrays.<Object>asList(2, 2, 2, 2)));
+        Decomposition result = response.asJsonObject(Decomposition.class);
+        assertThat(result.number, equalTo("16"));
+        assertThat(result.decomposition, equalTo(Arrays.asList(2, 2, 2, 2)));
     }
 
     @Test
@@ -31,9 +33,9 @@ public class PrimeFactorsChallenge extends YoseChallenge {
         HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=hello");
 
         assertThat(response.contentType(), equalTo("application/json"));
-        JSONObject result = response.asJsonObject();
-        assertThat(result.getString("number"), equalTo("hello"));
-        assertThat(result.getString("error"), equalTo("not a number"));
+        Error result = response.asJsonObject(Error.class);
+        assertThat(result.number, equalTo("hello"));
+        assertThat(result.error, equalTo("not a number"));
     }
 
     @Test
@@ -41,9 +43,9 @@ public class PrimeFactorsChallenge extends YoseChallenge {
         HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=1000001");
 
         assertThat(response.contentType(), equalTo("application/json"));
-        JSONObject result = response.asJsonObject();
-        assertThat(result.getInt("number"), equalTo(1000001));
-        assertThat(result.getString("error"), equalTo("too big number (>1e6)"));
+        Error result = response.asJsonObject(Error.class);
+        assertThat(result.number, equalTo("1000001"));
+        assertThat(result.error, equalTo("too big number (>1e6)"));
     }
 
 

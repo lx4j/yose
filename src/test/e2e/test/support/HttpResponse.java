@@ -1,11 +1,8 @@
 package test.support;
 
-import org.json.HTTP;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import yose.utils.JSON;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,8 +34,9 @@ public class HttpResponse {
         return IO.toString(body());
     }
 
-    public JSONObject asJsonObject() throws IOException, JSONException {
-        return new JSONObject(new JSONTokener(asString()));
+
+    public <T> T asJsonObject(Class<T> type) throws IOException {
+        return JSON.parse(asString(), type);
     }
 
     public Element asHtml() throws SAXException, IOException {
