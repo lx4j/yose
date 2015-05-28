@@ -2,6 +2,7 @@ package test.support;
 
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+import yose.utils.IO;
 import yose.utils.JSON;
 
 import java.io.IOException;
