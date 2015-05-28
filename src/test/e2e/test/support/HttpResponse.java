@@ -35,7 +35,7 @@ public class HttpResponse {
     }
 
 
-    public <T> T asJsonObject(Class<T> type) throws IOException {
+    public <T> T as(Class<T> type) throws IOException {
         return JSON.parse(asString(), type);
     }
 

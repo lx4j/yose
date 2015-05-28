@@ -27,7 +27,7 @@ public class PrimeFactorsViewTest {
 
         view.render(request, response);
 
-        Decomposition result = response.asJson(Decomposition.class);
+        Decomposition result = response.as(Decomposition.class);
         assertThat(result.number, equalTo("16"));
         assertThat(result.decomposition, equalTo(Arrays.asList(2, 2, 2, 2)));
     }
@@ -66,7 +66,7 @@ public class PrimeFactorsViewTest {
             this.content.append(content);
         }
 
-        public <T> T asJson(Class<T> type) throws IOException {
+        public <T> T as(Class<T> type) throws IOException {
             return JSON.parse(content.toString(), type);
         }
 

@@ -35,7 +35,7 @@ public class StartChallenge extends YoseChallenge {
         HttpResponse response = HttpRequest.get("http://localhost:3000/ping");
 
         assertThat(response.contentType(), equalTo("application/json"));
-        assertThat((Boolean) response.asJsonObject(Map.class).get("alive"), equalTo(true));
+        assertThat((Boolean) response.as(Map.class).get("alive"), equalTo(true));
     }
 
     @Test
