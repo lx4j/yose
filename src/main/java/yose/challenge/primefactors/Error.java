@@ -1,17 +1,21 @@
 package yose.challenge.primefactors;
 
-import java.util.List;
-
 /**
  * Created by L.x on 15-5-28.
  */
-public class Error {
-
-    public final String number;
+public class Error extends Result {
     public final String error;
 
     public Error(String number, String error) {
-        this.number = number;
+        super(number);
         this.error = error;
+    }
+
+    public static Result NaN(String number) {
+        return new Error(number, "not a number");
+    }
+
+    public static Result numberTooBig(Integer number) {
+        return new Error(String.valueOf(number), "too big number (>1e6)");
     }
 }

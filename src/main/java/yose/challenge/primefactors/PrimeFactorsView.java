@@ -15,18 +15,8 @@ public class PrimeFactorsView implements View {
     @Override
     public void render(final HttpRequest request, HttpResponse response) throws IOException {
         final String parameter = request.getParameterValues("number")[0];
-        try {
-            final Integer number = Integer.parseInt(parameter);
-            if (number > 1000000) {
-                throw new IllegalArgumentException("too big number (>1e6)");
-            }
-
-            json(PrimeFactors.decompose(number)).render(request, response);
-        } catch (NumberFormatException ex) {
-            json(new Error(parameter, "not a number")).render(request, response);
-        } catch (final IllegalArgumentException ex) {
-            json(new Error(parameter, ex.getMessage())).render(request, response);
-        }
+        Result result = PrimeFactors.decompose(parameter);
+        json(result).render(request, response);
     }
 
 }

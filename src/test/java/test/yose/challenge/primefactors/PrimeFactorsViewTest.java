@@ -35,28 +35,6 @@ public class PrimeFactorsViewTest {
         assertThat(JSON.toList(result.getJSONArray("decomposition")), equalTo(Arrays.<Object>asList(2, 2, 2, 2)));
     }
 
-    @Test
-    public void reportErrorWithInvalidNumber() throws Exception {
-        request.with("number", "hello");
-
-        view.render(request, response);
-
-        JSONObject result = response.asJsonObject();
-        assertThat(result.getString("number"), equalTo("hello"));
-        assertThat(result.getString("error"), equalTo("not a number"));
-    }
-
-    @Test
-    public void reportErrorWithNumberLargeThan1000000() throws Exception {
-        request.with("number", "1000001");
-
-        view.render(request, response);
-
-        JSONObject result = response.asJsonObject();
-        assertThat(result.getInt("number"), CoreMatchers.equalTo(1000001));
-        assertThat(result.getString("error"), CoreMatchers.equalTo("too big number (>1e6)"));
-    }
-
     private static class MockHttpRequest implements HttpRequest {
         private Map<String, String[]> parameters = new HashMap<String, String[]>();
 

@@ -17,11 +17,19 @@ public class PrimeFactors {
         return result;
     }
 
-    public static Decomposition decompose(String numberAsString) {
-        return decompose(Integer.parseInt(numberAsString));
+
+    public static Result decompose(String number) {
+        try {
+            return decompose(Integer.parseInt(number));
+        } catch (NumberFormatException ex) {
+            return Error.NaN(number);
+        }
     }
 
-    public static Decomposition decompose(int number) {
-        return new Decomposition(String.valueOf(number), PrimeFactors.of(number));
+    public static Result decompose(Integer number) {
+        if (number > 1000000) {
+            return Error.numberTooBig(number);
+        }
+        return new Decomposition(String.valueOf((int) number), PrimeFactors.of(number));
     }
 }

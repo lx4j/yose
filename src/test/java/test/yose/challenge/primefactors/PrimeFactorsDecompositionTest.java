@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
 public class PrimeFactorsDecompositionTest {
     @Test
     public void decompose() throws Exception {
-        Decomposition decomposition = PrimeFactors.decompose("16");
+        Decomposition decomposition = (Decomposition) PrimeFactors.decompose("16");
 
         assertThat(decomposition.number, equalTo("16"));
         assertThat(decomposition.decomposition, equalTo(Arrays.asList(2, 2, 2, 2)));
