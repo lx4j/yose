@@ -1,5 +1,9 @@
 package test.support;
 
+import org.json.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -31,6 +35,10 @@ public class HttpResponse {
 
     public String asString() throws IOException {
         return IO.toString(body());
+    }
+
+    public JSONObject asJsonObject() throws IOException, JSONException {
+        return new JSONObject(new JSONTokener(asString()));
     }
 
     public Element asHtml() throws SAXException, IOException {
