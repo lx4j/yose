@@ -5,8 +5,6 @@ import yose.core.HttpResponse;
 import yose.core.View;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.IllegalFormatCodePointException;
 
 import static yose.core.StaticView.json;
 
@@ -22,23 +20,12 @@ public class PrimeFactorsView implements View {
             if (number > 1000000) {
                 throw new IllegalArgumentException("too big number (>1e6)");
             }
-            HashMap<String, Object> result = new HashMap<String, Object>() {{
-                put("number", number);
-                put("decomposition", PrimeFactors.decompose(number));
-            }};
-            json(result).render(request, response);
+
+            json(PrimeFactors.decompose(number)).render(request, response);
         } catch (NumberFormatException ex) {
-            HashMap<String, Object> result = new HashMap<String, Object>() {{
-                put("number", parameter);
-                put("error", "not a number");
-            }};
-            json(result).render(request, response);
-        }catch (final IllegalArgumentException ex) {
-            HashMap<String, Object> result = new HashMap<String, Object>() {{
-                put("number", parameter);
-                put("error", ex.getMessage());
-            }};
-            json(result).render(request, response);
+            json(new Error(parameter, "not a number")).render(request, response);
+        } catch (final IllegalArgumentException ex) {
+            json(new Error(parameter, ex.getMessage())).render(request, response);
         }
     }
 

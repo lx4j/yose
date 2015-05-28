@@ -1,9 +1,9 @@
 package yose.core;
 
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by L.x on 15-5-27.
@@ -40,15 +40,10 @@ public class StaticView implements View {
         response.write(body);
     }
 
-    public static View json(Map map) {
-        return json(new JSONObject(map));
-    }
+    private static Gson gson = new GsonBuilder().create();
 
     public static View json(Object object) {
-        return json(new JSONObject(object, true));
+        return json(gson.toJson(object));
     }
 
-    public static View json(JSONObject object) {
-        return json(object.toString());
-    }
 }

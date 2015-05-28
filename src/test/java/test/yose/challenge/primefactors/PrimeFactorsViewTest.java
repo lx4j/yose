@@ -31,7 +31,7 @@ public class PrimeFactorsViewTest {
         view.render(request, response);
 
         JSONObject result = response.asJsonObject();
-        assertThat((Integer) result.get("number"), equalTo(16));
+        assertThat(result.getInt("number"), equalTo(16));
         assertThat(JSON.toList(result.getJSONArray("decomposition")), equalTo(Arrays.<Object>asList(2, 2, 2, 2)));
     }
 
