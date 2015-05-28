@@ -9,8 +9,10 @@ import yose.challenge.primefactors.Error;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.testinfected.hamcrest.dom.DomMatchers.hasUniqueSelector;
 
 /**
  * Created by L.x on 15-5-27.
@@ -53,6 +55,19 @@ public class PrimeFactorsChallenge extends YoseChallenge {
 
         assertThat(response.contentType(), equalTo("application/json"));
         List result = response.as(List.class);
-        assertThat(result.size(),equalTo(2));
+        assertThat(result.size(), equalTo(2));
+    }
+
+    @Test
+    public void uiSketches() throws Exception {
+        HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors/ui");
+
+        assertThat(response.asHtml(), allOf(
+                hasUniqueSelector("#title"),
+                hasUniqueSelector("#invitation"),
+                hasUniqueSelector("input#number"),
+                hasUniqueSelector("button#go")
+        ));
+
     }
 }
