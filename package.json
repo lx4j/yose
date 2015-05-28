@@ -1,0 +1,11 @@
+{
+  "name": "yose",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lx4j/yose.git"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
+}

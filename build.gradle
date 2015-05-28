@@ -20,7 +20,7 @@ dependencies {
     testCompile 'org.jmock:jmock-legacy:2.6.0-RC2'
 }
 sourceSets.test.java{
-    srcDirs+=[file('src/test/e2e')]
+    srcDirs+=[file('src/test/e2e'),file('src/test/js')]
 }
 idea {
     module {
