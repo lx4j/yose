@@ -36,5 +36,15 @@ public class PrimeFactorsChallenge extends YoseChallenge {
         assertThat(result.getString("error"), equalTo("not a number"));
     }
 
+    @Test
+    public void reportErrorWithNumberLargeThan1000000() throws Exception {
+        HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=1000001");
+
+        assertThat(response.contentType(), equalTo("application/json"));
+        JSONObject result = response.asJsonObject();
+        assertThat(result.getInt("number"), equalTo(1000001));
+        assertThat(result.getString("error"), equalTo("too big number (>1e6)"));
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package test.yose.challenge.primefactors;
 
+import org.hamcrest.CoreMatchers;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -43,6 +44,17 @@ public class PrimeFactorsViewTest {
         JSONObject result = response.asJsonObject();
         assertThat(result.getString("number"), equalTo("hello"));
         assertThat(result.getString("error"), equalTo("not a number"));
+    }
+
+    @Test
+    public void reportErrorWithNumberLargeThan1000000() throws Exception {
+        request.with("number", "1000001");
+
+        view.render(request, response);
+
+        JSONObject result = response.asJsonObject();
+        assertThat(result.getInt("number"), CoreMatchers.equalTo(1000001));
+        assertThat(result.getString("error"), CoreMatchers.equalTo("too big number (>1e6)"));
     }
 
     private static class MockHttpRequest implements HttpRequest {
