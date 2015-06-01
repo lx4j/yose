@@ -12,11 +12,18 @@ describe('primefactors', function () {
         });
 
         it("too big number", function () {
-            expect(primeFactors.render({number: 100000000, error: 'too big number (\u003e1e6)'})).to.equal('too big number (>1e6)');
+            expect(primeFactors.render({
+                number: 100000000,
+                error: 'too big number (\u003e1e6)'
+            })).to.equal('too big number (>1e6)');
         });
 
         it("NaN", function () {
             expect(primeFactors.render({number: '3hello', error: 'not a number'})).to.equal('3hello is not a number');
+        });
+
+        it("number < 1", function () {
+            expect(primeFactors.render({number: '-1', error: 'not an integer > 1'})).to.equal('-1 is not an integer > 1');
         });
     });
 

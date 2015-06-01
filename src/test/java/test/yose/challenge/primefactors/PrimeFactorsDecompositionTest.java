@@ -38,4 +38,14 @@ public class PrimeFactorsDecompositionTest {
         assertThat(decomposition.number, equalTo("1000001"));
         assertThat(decomposition.error, equalTo("too big number (>1e6)"));
     }
+
+
+    @Test
+    public void decomposeWithNumberLargeThan1() throws Exception {
+
+        Error decomposition = (Error) PrimeFactors.decompose(0);
+
+        assertThat(decomposition.number, equalTo("0"));
+        assertThat(decomposition.error, equalTo("not an integer > 1"));
+    }
 }

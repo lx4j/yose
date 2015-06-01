@@ -49,6 +49,17 @@ public class PrimeFactorsChallenge extends YoseChallenge {
         assertThat(result.error, equalTo("too big number (>1e6)"));
     }
 
+
+    @Test
+    public void reportErrorWithNumberLessThan1() throws Exception {
+        HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=-1");
+
+        assertThat(response.contentType(), equalTo("application/json"));
+        Error result = response.as(Error.class);
+        assertThat(result.number, equalTo("-1"));
+        assertThat(result.error, equalTo("not an integer > 1"));
+    }
+
     @Test
     public void decomposeMultiEntries() throws Exception {
         HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=16&number=hello");

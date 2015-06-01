@@ -18,4 +18,8 @@ public class Error extends Result {
     public static Result numberTooBig(Integer number) {
         return new Error(String.valueOf(number), "too big number (>1e6)");
     }
+
+    public static Result numberLessThan1(Integer number) {
+        return new Error(String.valueOf(number), "not an integer > 1");
+    }
 }

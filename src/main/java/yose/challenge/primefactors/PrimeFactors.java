@@ -26,6 +26,9 @@ public class PrimeFactors {
     }
 
     public static Result decompose(Integer number) {
+        if (number < 1) {
+            return Error.numberLessThan1(number);
+        }
         if (number > 1000000) {
             return Error.numberTooBig(number);
         }
