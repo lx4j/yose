@@ -36,7 +36,7 @@ function PrimeFactors(container) {
             if (data instanceof Array) {
                 self.results.innerHTML = data.map(function (item) {
                     return '<li>' + self.render(item) + '</li>';
-                });
+                }).join('');
             } else {
                 self.result.innerHTML = self.render(data);
             }
