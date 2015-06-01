@@ -20,13 +20,34 @@ import static org.testinfected.hamcrest.dom.DomMatchers.hasUniqueSelector;
 public class PrimeFactorsChallenge extends YoseChallenge {
 
     @Test
-    public void decomposite() throws Exception {
+    public void decompositeArabicNumber() throws Exception {
         HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=16");
 
         assertThat(response.contentType(), equalTo("application/json"));
         Decomposition result = response.as(Decomposition.class);
-        assertThat(result.number, equalTo("16"));
-        assertThat(result.decomposition, equalTo(Arrays.asList(2, 2, 2, 2)));
+        assertThat(result.number, equalTo(ArabicNumber.valueOf(16)));
+        assertThat(result.decomposition, equalTo(Arrays.asList(
+                ArabicNumber.valueOf(2),
+                ArabicNumber.valueOf(2),
+                ArabicNumber.valueOf(2),
+                ArabicNumber.valueOf(2)
+        )));
+    }
+
+    @Test
+    public void decompositeRomanNumber() throws Exception {
+        HttpResponse response = HttpRequest.get("http://localhost:3000/primeFactors?number=CCC");
+
+        assertThat(response.contentType(), equalTo("application/json"));
+        Decomposition result = response.as(Decomposition.class);
+        assertThat(result.number, equalTo(RomanNumber.valueOf(300)));
+        assertThat(result.decomposition, equalTo(Arrays.asList(
+                RomanNumber.parse("II"),
+                RomanNumber.parse("II"),
+                RomanNumber.parse("III"),
+                RomanNumber.parse("V"),
+                RomanNumber.parse("V")
+        )));
     }
 
     @Test

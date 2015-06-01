@@ -3,11 +3,12 @@ package yose.challenge.primefactors;
 /**
  * Created by L.x on 15-5-28.
  */
-public class Error extends Result {
+public class Error implements Result {
     public final String error;
+    public final String number;
 
     public Error(String number, String error) {
-        super(number);
+        this.number = number;
         this.error = error;
     }
 
@@ -15,11 +16,11 @@ public class Error extends Result {
         return new Error(number, "not a number");
     }
 
-    public static Result numberTooBig(Integer number) {
+    public static Result numberTooBig(Numeral number) {
         return new Error(String.valueOf(number), "too big number (>1e6)");
     }
 
-    public static Result numberLessThan1(Integer number) {
+    public static Result numberLessThan1(Numeral number) {
         return new Error(String.valueOf(number), "not an integer > 1");
     }
 }

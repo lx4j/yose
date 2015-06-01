@@ -19,20 +19,41 @@ public class PrimeFactors {
 
     public static Result decompose(String number) {
         try {
-            return decompose(Integer.parseInt(number));
+            return decompose(Numeral.parse(number));
         } catch (NumberFormatException ex) {
             return Error.NaN(number);
         }
     }
 
-    public static Result decompose(Integer number) {
-        if (number < 1) {
-            return Error.numberLessThan1(number);
+    public static Result decompose(final Numeral numeral) {
+        if (numeral.lessThan(1)) {
+            return Error.numberLessThan1(numeral);
         }
-        if (number > 1000000) {
-            return Error.numberTooBig(number);
+        if (numeral.largeThan(1000000)) {
+            return Error.numberTooBig(numeral);
         }
-        return new Decomposition(String.valueOf((int) number), PrimeFactors.of(number));
+        return new Decomposition(numeral, transform(of(numeral.intValue()), as(numeral)));
+    }
+
+    private static Transformation<Numeral> as(final Numeral numeral) {
+        return new Transformation<Numeral>() {
+            @Override
+            public Numeral transform(Integer number) {
+                return numeral.of(number);
+            }
+        };
+    }
+
+    private static interface Transformation<T> {
+        T transform(Integer number);
+    }
+
+    private static <T>  List<T> transform(List<Integer> numerals, Transformation<T> transformer) {
+        List<T> result = new ArrayList<T>();
+        for (Integer numeral : numerals) {
+            result.add(transformer.transform(numeral));
+        }
+        return result;
     }
 
     public static List<Integer> of(int number) {
