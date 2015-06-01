@@ -18,10 +18,28 @@ function PrimeFactors(container) {
     var self = this;
     self.input = $('#number', container);
     self.result = $('#result', container);
+    self.results = $('#results', container);
     self.button = $('#go', container);
+    Object.defineProperty(self, 'query', {
+        get: function () {
+            var numbers = self.input.value;
+            return numbers ? numbers.split(',').map(function (item) {
+                return 'number=' + item.replace(/^\s+|\s+$/g, '');
+            }).join('&') : '';
+        }
+    });
     self.button.addEventListener('click', function () {
-        $.ajax('/primeFactors?number=' + self.input.value, function (data) {
-            self.result.innerHTML = self.render(data);
+        $.ajax('/primeFactors?' + self.query, function (data) {
+            self.results.innerHTML = '';
+            self.result.innerHTML = '';
+
+            if (data instanceof Array) {
+                self.results.innerHTML = data.map(function (item) {
+                    return '<li>' + self.render(item) + '</li>';
+                });
+            } else {
+                self.result.innerHTML = self.render(data);
+            }
         });
     });
 }
